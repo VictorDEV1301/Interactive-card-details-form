@@ -11,10 +11,13 @@ const numberCard = document.getElementById('numberCard')
 
 numberInput.addEventListener('input', (event) => {
   numberCard.textContent = event.target.value;
-  if (/[^\d]/g.test(numberInput.value)) {
-    numberInput.style.border = `2px solid red`
+  if (/^[\d\s]+$/.test(numberInput.value)) {
+    numberInput.value = numberInput.value.replace(/^(\d{4})(\d)/, '$1 $2')
+      .replace(/^(\d{4})\ (\d{4})(\d)/, '$1 $2 $3')
+      .replace(/^(\d{4})\ (\d{4})\ (\d{4})(\d)/, '$1 $2 $3 $4')
+    numberInput.style.border = '2px solid black'
   } else {
-    numberInput.style.border = `1px solid black`
+    numberInput.style.border = '2px solid red'
   }
 })
 
@@ -59,12 +62,12 @@ const form = document.getElementById('form')
 
 form.addEventListener('submit', (event) => {
   event.preventDefault()
-  if((numberInput.style.border === `2px solid red`)||
-  (dateMInput.style.border === `2px solid red`)||
-  (dateYInput.style.border === `2px solid red`)||
-  (cvcInput.style.border === `2px solid red`)){
+  if ((numberInput.style.border === `2px solid red`) ||
+    (dateMInput.style.border === `2px solid red`) ||
+    (dateYInput.style.border === `2px solid red`) ||
+    (cvcInput.style.border === `2px solid red`)) {
     alert('Verifique os dados e tente novamente')
-  }else{
+  } else {
     form.style.display = 'none'
     formConfirm.style.display = 'flex'
   }
